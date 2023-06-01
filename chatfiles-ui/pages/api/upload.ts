@@ -35,13 +35,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const formData = new FormData();
 
-      uploadFiles.forEach((uploadFile, index) => {
-        formData.append(
-          `file${index}`,
-          fs.createReadStream(uploadFile.filepath),
-          uploadFile.originalFilename,
-        );
-      });
+      uploadFiles.forEach(
+        (
+          uploadFile: { filepath: string; originalFilename: string },
+          index: number,
+        ) => {
+          formData.append(
+            `file${index}`,
+            fs.createReadStream(uploadFile.filepath),
+            uploadFile.originalFilename,
+          );
+        },
+      );
 
       const response = await fetch(`${CHAT_FILES_SERVER_HOST}/upload`, {
         method: 'POST',

@@ -66,10 +66,14 @@ const Home: React.FC<HomeProps> = ({ serverSideApiKeyIsSet }) => {
       body: JSON.stringify(chatBody),
     });
     if (!response.ok) throw Error('Chat fetch failed');
+    if (!response.body) throw Error('Chat fetch failed: response body is null');
     return response.body.getReader();
   };
 
-  const fetchQuery = async (message: Message, index) => {
+  const fetchQuery = async (
+    message: Message,
+    index: { indexName: string; indexType: string },
+  ): Promise<any> => {
     const response = await fetch(
       `/api/query?message=${message.content}&indexName=${index.indexName}&indexType=${index.indexType}`,
       {
