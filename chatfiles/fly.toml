@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for leaf-chatfiles-backend on 2023-06-01T06:08:37+02:00
+# fly.toml app configuration file generated for leaf-chatfiles-backend on 2023-06-01T20:57:13+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = "leaf-chatfiles-backend"
-primary_region = "lax"
+primary_region = "ams"
 kill_signal = "SIGINT"
 kill_timeout = "1m0s"
 

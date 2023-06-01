@@ -1,16 +1,19 @@
 from flask import Flask, request, make_response, jsonify
 import uuid
-
+from PyPDF2 import PdfMerger
 import argparse
 import os
 from pathlib import Path
+import time
 
 
-from utils import create_index, get_answer_from_index, clean_file
+from utils import create_index, get_answer_from_index, clean_file, merge_pdfs
 
 app = Flask(__name__)
 
 file_upload_path = "./documents"
+if not os.path.exists(file_upload_path):
+    os.makedirs(file_upload_path)
 
 
 @app.route("/upload", methods=["POST"])
@@ -29,8 +32,19 @@ def upload_file():
         filepaths.append(filepath)
         filenames.append(filename)
 
+    if len(filepaths) > 1:
+        print("filepaths\n", filepaths, "\n")
+        merged_filepath = os.path.join(file_upload_path, str(uuid.uuid4()) + ".pdf")
+        merge_pdfs(filepaths, merged_filepath)
+        filepaths = [
+            merged_filepath
+        ]  # Replace the original list with only the merged file
+        filenames = [
+            os.path.basename(merged_filepath)
+        ]  # Similarly update filenames to reflect the merged file
+
     index_name = (
-        str(uuid.uuid4()) if len(filepaths) > 1 else os.path.splitext(filenames[0])[0]
+        os.path.splitext(filenames[0])[0] if len(filenames) == 1 else str(uuid.uuid4())
     )
 
     index = create_index(filepaths, index_name)

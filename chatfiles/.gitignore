@@ -3,5 +3,8 @@ __pycache__/
 *decompress
 *pure
 
+# Ignore .pyc files
+**/__pycache__/*.pyc
+
 # Environments
 .env

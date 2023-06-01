@@ -10,6 +10,7 @@ from llama_index import (
 )
 from dotenv import load_dotenv
 from prompt import get_prompt
+from PyPDF2 import PdfMerger
 
 load_dotenv()
 
@@ -22,6 +23,17 @@ service_context = ServiceContext.from_defaults(llm_predictor=llm_predictor)
 
 file_upload_path = "./documents"
 file_upload_dir = Path(file_upload_path)
+
+
+def merge_pdfs(file_paths, output_path):
+    merger = PdfMerger()
+    for file_path in file_paths:
+        merger.append(file_path)
+    merger.write(output_path)
+    merger.close()
+
+    for file_path in file_paths:
+        os.remove(file_path)
 
 
 def create_index(filepath, index_name):

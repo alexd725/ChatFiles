@@ -1,10 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import fs from 'fs';
 import fetch from 'node-fetch';
-import FormData from 'form-data';
+// import FormData from 'form-data';
 import { IncomingForm } from 'formidable';
 import { CHAT_FILES_SERVER_HOST } from '@/utils/app/const';
 import { LlamaIndex } from '@/types';
+import { File } from 'fetch-blob/file.js';
+import { fileFromSync } from 'fetch-blob/from.js';
+import { FormData } from 'formdata-polyfill/esm.min.js';
 
 export const config = {
   api: {
@@ -40,10 +43,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           uploadFile: { filepath: string; originalFilename: string },
           index: number,
         ) => {
+          const file = fileFromSync(uploadFile.filepath); // Use fileFromSync to read file
           formData.append(
             `file${index}`,
-            fs.createReadStream(uploadFile.filepath),
-            uploadFile.originalFilename,
+            new File([file], uploadFile.originalFilename), // Use File constructor from fetch-blob/file.js
           );
         },
       );
