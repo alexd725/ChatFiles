@@ -213,30 +213,13 @@ export const Chat: FC<Props> = memo(
                       {CHAT_FILES_MAX_SIZE != 0 && (
                         <>
                           <p className="mt-2 px-8 text-xs text-gray-500 dark:text-gray-400">
-                            This environment is only for trial and supports a
-                            maximum file size of{' '}
+                            This environment supports a maximum file size of{' '}
                             {humanFileSize(CHAT_FILES_MAX_SIZE)}.
                           </p>
-                          <p className="mt-2 px-8 text-xs text-gray-500 dark:text-gray-400">
-                            Here are some good starting questions:
-                            <a
-                              className="text-xs text-gray-500 underline dark:text-gray-400"
-                              href="https://github.com/guangzhengli/ChatFiles/blob/dev/doc/Example.md"
-                            >
-                              {' '}
-                              Good Examples .
-                            </a>
-                          </p>
+
                           <p className="mt-2 px-8 text-xs text-gray-500 dark:text-gray-400">
                             If you need to upload larger files, please deploy
-                            your own chatfiles by:
-                            <a
-                              className="text-xs text-gray-500 underline dark:text-gray-400"
-                              href="https://github.com/guangzhengli/ChatFiles"
-                            >
-                              {' '}
-                              Chatfiles .
-                            </a>
+                            your own instance of this app.
                           </p>
                         </>
                       )}
