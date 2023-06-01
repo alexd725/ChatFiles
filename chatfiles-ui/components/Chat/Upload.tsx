@@ -1,7 +1,6 @@
 import { LlamaIndex } from '@/types';
 import { CHAT_FILES_MAX_SIZE } from '@/utils/app/const';
 import { humanFileSize } from '@/utils/app/files';
-import { useTranslation } from 'next-i18next';
 
 interface Props {
   onIndexChange: (index: LlamaIndex) => void;
@@ -16,8 +15,6 @@ export const Upload = ({
   handleIsUploadSuccess,
   handleUploadError,
 }: Props) => {
-  const { t } = useTranslation('sidebar');
-
   const handleFiles = async (files: FileList) => {
     let allFilesValid = true;
 
@@ -100,11 +97,11 @@ export const Upload = ({
             ></path>
           </svg>
           <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-            <span className="font-semibold">{t('Click to upload')}</span>{' '}
-            {t('or drag and drop.')}
+            <span className="font-semibold">{'Click to upload'}</span> or drag
+            and drop.
           </p>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            {t('File supported types: TXT, PDF, EPUB, Markdown, Zip...')}
+            File supported types: TXT, PDF, EPUB, Markdown, Zip...
           </p>
         </div>
         <input

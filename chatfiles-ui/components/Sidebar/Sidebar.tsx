@@ -6,7 +6,6 @@ import {
   IconPlus,
 } from '@tabler/icons-react';
 import { FC, useEffect, useState } from 'react';
-import { useTranslation } from 'next-i18next';
 import { Conversations } from './Conversations';
 import { Folders } from './Folders';
 import { Search } from './Search';
@@ -61,7 +60,6 @@ export const Sidebar: FC<Props> = ({
   onExportConversations,
   onImportConversations,
 }) => {
-  const { t } = useTranslation('sidebar');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredConversations, setFilteredConversations] =
     useState<Conversation[]>(conversations);
@@ -122,19 +120,19 @@ export const Sidebar: FC<Props> = ({
     >
       <header className="flex items-center">
         <button
-          className="flex w-[190px] flex-shrink-0 cursor-pointer items-center gap-3 rounded-md border border-white/20 p-3 text-[12.5px] leading-3 text-white transition-colors duration-200 select-none hover:bg-gray-500/10"
+          className="flex w-[190px] flex-shrink-0 cursor-pointer select-none items-center gap-3 rounded-md border border-white/20 p-3 text-[12.5px] leading-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
           onClick={() => {
             onNewConversation();
             setSearchTerm('');
           }}
         >
           <IconPlus size={18} />
-          {t('New chat')}
+          New chat
         </button>
 
         <button
           className="ml-2 flex flex-shrink-0 cursor-pointer items-center gap-3 rounded-md border border-white/20 p-3 text-[12.5px] leading-3 text-white transition-colors duration-200 hover:bg-gray-500/10"
-          onClick={() => onCreateFolder(t('New folder'))}
+          onClick={() => onCreateFolder('New folder')}
         >
           <IconFolderPlus size={18} />
         </button>
@@ -192,9 +190,9 @@ export const Sidebar: FC<Props> = ({
             />
           </div>
         ) : (
-          <div className="mt-8 text-white text-center opacity-50 select-none">
-            <IconMessagesOff className='mx-auto mb-3'/>
-            <span className='text-[12.5px] leading-3'>{t('No conversations.')}</span>
+          <div className="mt-8 select-none text-center text-white opacity-50">
+            <IconMessagesOff className="mx-auto mb-3" />
+            <span className="text-[12.5px] leading-3">No conversations</span>
           </div>
         )}
       </div>

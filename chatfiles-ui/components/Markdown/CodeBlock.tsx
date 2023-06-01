@@ -4,7 +4,6 @@ import {
 } from '@/utils/app/codeblock';
 import { IconCheck, IconClipboard, IconDownload } from '@tabler/icons-react';
 import { FC, useState, memo } from 'react';
-import { useTranslation } from 'next-i18next';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export const CodeBlock: FC<Props> = memo(({ language, value }) => {
-  const { t } = useTranslation('markdown');
   const [isCopied, setIsCopied] = useState<Boolean>(false);
 
   const copyToClipboard = () => {
@@ -36,10 +34,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
       3,
       true,
     )}${fileExtension}`;
-    const fileName = window.prompt(
-      t('Enter file name') || '',
-      suggestedFileName,
-    );
+    const fileName = window.prompt('Enter file name' || '', suggestedFileName);
 
     if (!fileName) {
       // user pressed cancel on prompt
@@ -72,7 +67,7 @@ export const CodeBlock: FC<Props> = memo(({ language, value }) => {
             ) : (
               <IconClipboard size={18} className="mr-1.5" />
             )}
-            {isCopied ? t('Copied!') : t('Copy code')}
+            {isCopied ? 'Copied!' : 'Copy code'}
           </button>
           <button
             className="flex items-center rounded bg-none py-0.5 pl-2 text-xs text-white focus:outline-none"

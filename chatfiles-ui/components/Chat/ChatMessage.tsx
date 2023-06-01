@@ -1,6 +1,5 @@
 import { Message } from '@/types';
 import { IconEdit } from '@tabler/icons-react';
-import { useTranslation } from 'next-i18next';
 import { FC, useEffect, useRef, useState, memo } from 'react';
 import rehypeMathjax from 'rehype-mathjax';
 import remarkGfm from 'remark-gfm';
@@ -17,7 +16,6 @@ interface Props {
 
 export const ChatMessage: FC<Props> = memo(
   ({ message, messageIndex, onEditMessage }) => {
-    const { t } = useTranslation('chat');
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isHovering, setIsHovering] = useState<boolean>(false);
     const [messageContent, setMessageContent] = useState(message.content);
@@ -84,7 +82,7 @@ export const ChatMessage: FC<Props> = memo(
       >
         <div className="relative m-auto flex gap-4 p-4 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl">
           <div className="min-w-[40px] font-bold">
-            {message.role === 'assistant' ? t('AI') : t('You')}:
+            {message.role === 'assistant' ? 'AI' : 'You'}:
           </div>
 
           <div className="prose mt-[-2px] w-full dark:prose-invert">
@@ -114,7 +112,7 @@ export const ChatMessage: FC<Props> = memo(
                         onClick={handleEditMessage}
                         disabled={messageContent.trim().length <= 0}
                       >
-                        {t('Save & Submit')}
+                        Save & Submit
                       </button>
                       <button
                         className="h-[40px] rounded-md border border-neutral-300 px-4 py-1 text-sm font-medium text-neutral-700 hover:bg-neutral-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800"
@@ -123,7 +121,7 @@ export const ChatMessage: FC<Props> = memo(
                           setIsEditing(false);
                         }}
                       >
-                        {t('Cancel')}
+                        Cancel
                       </button>
                     </div>
                   </div>

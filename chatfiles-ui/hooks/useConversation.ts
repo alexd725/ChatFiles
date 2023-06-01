@@ -11,12 +11,10 @@ import {
   saveConversations,
   updateConversation,
 } from '@/utils/app/conversation';
-import { useTranslation } from 'react-i18next';
 
 import { DEFAULT_SYSTEM_PROMPT } from '@/utils/app/const';
 
 const useConversations = () => {
-  const { t } = useTranslation('chat');
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation>();
@@ -41,10 +39,11 @@ const useConversations = () => {
         model: OpenAIModels[OpenAIModelID.GPT_3_5],
         prompt: DEFAULT_SYSTEM_PROMPT,
         folderId: 0,
-        filepaths: [],
+        fileNames: [],
         index: {
           indexName: '',
           indexType: '',
+          fileNames: [],
         },
       });
       localStorage.removeItem('selectedConversation');
