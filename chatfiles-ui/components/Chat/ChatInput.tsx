@@ -7,7 +7,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useTranslation } from 'next-i18next';
 
 interface Props {
   messageIsStreaming: boolean;
@@ -30,7 +29,6 @@ export const ChatInput: FC<Props> = ({
   textareaRef,
   conversation,
 }) => {
-  const { t } = useTranslation('chat');
   const [content, setContent] = useState<string>();
   const [isTyping, setIsTyping] = useState<boolean>(false);
 
@@ -40,11 +38,9 @@ export const ChatInput: FC<Props> = ({
 
     if (value.length > maxLength) {
       alert(
-        t(
-          `Message limit is {{maxLength}} characters. You have entered {{valueLength}} characters.`,
-          { maxLength, valueLength: value.length },
-        ),
+        `Message limit is ${maxLength} characters. You have entered ${value.length} characters.`,
       );
+
       return;
     }
 
@@ -57,7 +53,7 @@ export const ChatInput: FC<Props> = ({
     }
 
     if (!content) {
-      alert(t('Please enter a message'));
+      alert('Please enter a message');
       return;
     }
 
@@ -111,8 +107,8 @@ export const ChatInput: FC<Props> = ({
             className="absolute -top-2 left-0 right-0 mx-auto w-fit rounded border border-neutral-200 bg-white py-2 px-4 text-black dark:border-neutral-600 dark:bg-[#343541] dark:text-white md:top-0"
             onClick={handleStopConversation}
           >
-            <IconPlayerStop size={16} className="mb-[2px] inline-block" />{' '}
-            {t('Stop Generating')}
+            <IconPlayerStop size={16} className="mb-[2px] inline-block" /> Stop
+            Generating
           </button>
         )}
 
@@ -122,7 +118,7 @@ export const ChatInput: FC<Props> = ({
             onClick={onRegenerate}
           >
             <IconRepeat size={16} className="mb-[2px] inline-block" />{' '}
-            {t('Regenerate response')}
+            Regenerate response
           </button>
         )}
 
@@ -140,7 +136,7 @@ export const ChatInput: FC<Props> = ({
                   : 'hidden'
               }`,
             }}
-            placeholder={t('Type a message...') || ''}
+            placeholder={'Type a message...' || ''}
             value={content}
             rows={1}
             onCompositionStart={() => setIsTyping(true)}
@@ -158,7 +154,7 @@ export const ChatInput: FC<Props> = ({
         </div>
       </div>
       <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
-        <span className="mr-1">{t('File(s)')}:</span>
+        <span className="mr-1">File(s):</span>
         {Array.isArray(conversation.index.fileNames) ? (
           <span>{conversation.index.fileNames.join(', ')}</span>
         ) : (

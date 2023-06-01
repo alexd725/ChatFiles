@@ -1,7 +1,6 @@
 import { ChatFolder, Conversation } from '@/types';
 import { cleanConversationHistory } from '@/utils/app/clean';
 import { IconFileImport } from '@tabler/icons-react';
-import { useTranslation } from 'next-i18next';
 import { FC } from 'react';
 import { SidebarButton } from './SidebarButton';
 
@@ -13,7 +12,6 @@ interface Props {
 }
 
 export const Import: FC<Props> = ({ onImport }) => {
-  const { t } = useTranslation('sidebar');
   return (
     <>
       <input
@@ -41,7 +39,7 @@ export const Import: FC<Props> = ({ onImport }) => {
       />
 
       <SidebarButton
-        text={t('Import conversations')}
+        text={'Import conversations'}
         icon={<IconFileImport size={18} />}
         onClick={() => {
           const importFile = document.querySelector(

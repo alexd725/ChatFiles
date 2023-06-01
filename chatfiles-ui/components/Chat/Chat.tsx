@@ -6,7 +6,6 @@ import {
   OpenAIModel,
 } from '@/types';
 import { throttle } from '@/utils';
-import { useTranslation } from 'next-i18next';
 import { FC, memo, MutableRefObject, useEffect, useRef, useState } from 'react';
 import { ChatInput } from './ChatInput';
 import { ChatLoader } from './ChatLoader';
@@ -51,7 +50,6 @@ export const Chat: FC<Props> = memo(
     onEditMessage,
     stopConversationRef,
   }) => {
-    const { t } = useTranslation('chat');
     const [currentMessage, setCurrentMessage] = useState<Message>();
     const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
     const [showSettings, setShowSettings] = useState<boolean>(false);
@@ -122,15 +120,13 @@ export const Chat: FC<Props> = memo(
         {!(apiKey || serverSideApiKeyIsSet) ? (
           <div className="mx-auto flex h-full w-[300px] flex-col justify-center space-y-6 sm:w-[500px]">
             <div className="text-center text-2xl font-semibold text-gray-800 dark:text-gray-100">
-              {t('OpenAI API Key Required')}
+              OpenAI API Key Required
             </div>
             <div className="text-center text-gray-500 dark:text-gray-400">
-              {t(
-                'Please set your OpenAI API key in the bottom left of the sidebar.',
-              )}
+              Please set your OpenAI API key in the bottom left of the sidebar.
             </div>
             <div className="text-center text-gray-500 dark:text-gray-400">
-              {t("If you don't have an OpenAI API key, you can get one here: ")}
+              If you do not have an OpenAI API key, you can get one here:
               <a
                 href="https://platform.openai.com/account/api-keys"
                 target="_blank"

@@ -28,7 +28,6 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useTranslation } from 'next-i18next';
 import useConversations from '@/hooks/useConversation';
 
 interface HomeProps {
@@ -45,7 +44,6 @@ const Home: React.FC<HomeProps> = ({ serverSideApiKeyIsSet }) => {
     handleUpdateConversation,
   } = useConversations();
 
-  const { t } = useTranslation('chat');
   const [folders, setFolders] = useState<ChatFolder[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [models, setModels] = useState<OpenAIModel[]>([]);
@@ -164,55 +162,50 @@ const Home: React.FC<HomeProps> = ({ serverSideApiKeyIsSet }) => {
     ],
   );
 
-  const fetchModels = useCallback(
-    async (key: string) => {
-      const error = {
-        title: t('Error fetching models.'),
-        code: null,
-        messageLines: [
-          t(
-            'Make sure your OpenAI API key is set in the bottom left of the sidebar.',
-          ),
-          t('If you completed this step, OpenAI may be experiencing issues.'),
-        ],
-      } as ErrorMessage;
+  const fetchModels = useCallback(async (key: string) => {
+    const error = {
+      title: 'Error fetching models',
+      code: null,
+      messageLines: [
+        'Make sure your OpenAI API key is set in the bottom left of the sidebar.',
+        'If you completed this step, OpenAI may be experiencing issues.',
+      ],
+    } as ErrorMessage;
 
-      try {
-        const response = await fetch('/api/models', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            key,
-          }),
-        });
+    try {
+      const response = await fetch('/api/models', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          key,
+        }),
+      });
 
-        if (!response.ok) {
-          const data = await response.json();
-          Object.assign(error, {
-            code: data.error?.code,
-            messageLines: [data.error?.message],
-          });
-          setModelError(error);
-          return;
-        }
-
+      if (!response.ok) {
         const data = await response.json();
-
-        if (!data) {
-          setModelError(error);
-          return;
-        }
-
-        setModels(data);
-        setModelError(null);
-      } catch (e) {
+        Object.assign(error, {
+          code: data.error?.code,
+          messageLines: [data.error?.message],
+        });
         setModelError(error);
+        return;
       }
-    },
-    [t],
-  );
+
+      const data = await response.json();
+
+      if (!data) {
+        setModelError(error);
+        return;
+      }
+
+      setModels(data);
+      setModelError(null);
+    } catch (e) {
+      setModelError(error);
+    }
+  }, []);
 
   const handleLightMode = (mode: 'dark' | 'light') => {
     setLightMode(mode);
@@ -297,7 +290,7 @@ const Home: React.FC<HomeProps> = ({ serverSideApiKeyIsSet }) => {
 
     const newConversation: Conversation = {
       id: lastConversation ? lastConversation.id + 1 : 1,
-      name: `${t('Conversation')} ${
+      name: `${'Conversation'} ${
         lastConversation ? lastConversation.id + 1 : 1
       }`,
       messages: [],
